@@ -1,6 +1,5 @@
 import {
   View,
-  Text,
   Animated,
   StyleSheet,
   TouchableWithoutFeedback
@@ -8,32 +7,34 @@ import {
 import React, { Component } from "react";
 import { SHADOW } from "../utilities/style-constants";
 
-class Opacity extends Component {
+class Scale extends Component {
   state = { animation: new Animated.Value(1) };
 
-  fadeOut = () => {
+  shiftAnimate = () => {
     Animated.timing(this.state.animation, {
-      toValue: 0.1,
-      duration: 300
-    }).start();
-  };
-
-  fadeIn = () => {
-    Animated.timing(this.state.animation, {
-      toValue: 1,
-      duration: 200
-    }).start();
+      toValue: 1.5,
+      duration: 500
+    }).start(() => {
+      Animated.timing(this.state.animation, {
+        toValue: 1.1,
+        duration: 300
+      }).start(() => {
+        Animated.timing(this.state.animation, {
+          toValue: 1,
+          duration: 200
+        }).start();
+      });
+    });
   };
 
   render() {
-    const opactiyAnimation = { opacity: this.state.animation };
+    const animationStyle = {
+      transform: [{ scaleY: this.state.animation }]
+    };
     return (
       <View style={styles.container}>
-        <TouchableWithoutFeedback
-          onPressIn={this.fadeOut}
-          onPressOut={this.fadeIn}
-        >
-          <Animated.View style={[styles.box, opactiyAnimation]} />
+        <TouchableWithoutFeedback onPress={this.shiftAnimate}>
+          <Animated.View style={[styles.box, animationStyle]} />
         </TouchableWithoutFeedback>
       </View>
     );
@@ -55,4 +56,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { Opacity };
+export { Scale };

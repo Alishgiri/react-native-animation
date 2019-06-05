@@ -1,6 +1,5 @@
 import {
   View,
-  Text,
   Animated,
   StyleSheet,
   TouchableWithoutFeedback
@@ -8,32 +7,26 @@ import {
 import React, { Component } from "react";
 import { SHADOW } from "../utilities/style-constants";
 
-class Opacity extends Component {
-  state = { animation: new Animated.Value(1) };
+class ColorBackground extends Component {
+  state = { animation: new Animated.Value(0) };
 
-  fadeOut = () => {
-    Animated.timing(this.state.animation, {
-      toValue: 0.1,
-      duration: 300
-    }).start();
-  };
-
-  fadeIn = () => {
+  startAnimation = () => {
     Animated.timing(this.state.animation, {
       toValue: 1,
-      duration: 200
+      duration: 1500
     }).start();
   };
 
   render() {
-    const opactiyAnimation = { opacity: this.state.animation };
+    const boxInterpolation = this.state.animation.interpolate({
+      inputRange: [0, 1],
+      outputRange: ["rgb(255, 99, 71)", "rgb(125, 125, 125)"]
+    });
+    const animationStyle = { backgroundColor: boxInterpolation };
     return (
       <View style={styles.container}>
-        <TouchableWithoutFeedback
-          onPressIn={this.fadeOut}
-          onPressOut={this.fadeIn}
-        >
-          <Animated.View style={[styles.box, opactiyAnimation]} />
+        <TouchableWithoutFeedback onPress={this.startAnimation}>
+          <Animated.View style={[styles.box, animationStyle]} />
         </TouchableWithoutFeedback>
       </View>
     );
@@ -55,4 +48,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { Opacity };
+export { ColorBackground };
