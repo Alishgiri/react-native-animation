@@ -7,5 +7,6 @@ export { TranslatePosition } from "./TranslatePosition";
 
 // Animated Variants
 export { Spring } from "./AnimatedVariants/Spring";
+export { Decay } from "./AnimatedVariants/Decay";
 export { EasingAnimation as Easing } from "./AnimatedVariants/Easing";
 export { InterpolateChain } from "./AnimatedVariants/InterpolateChain";
